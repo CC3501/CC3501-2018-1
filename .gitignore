@@ -1,2 +1,5 @@
 # Ignora archivos residuales python
 *.pyc
+
+# Ignora carpeta de tareas
+tarea *
