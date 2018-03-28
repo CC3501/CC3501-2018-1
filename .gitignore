@@ -4,3 +4,6 @@
 # Ignora carpeta de tareas
 tarea *
 Cheat sheet numpy/
+
+# Ignora archivos residuales auxiliares
+aux2/otros/
