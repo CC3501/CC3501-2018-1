@@ -1,4 +1,6 @@
-###Pilar Y Condición de Borde
+## Tareita 1
+
+### Pilar Y Condición de Borde
 
 - Para trabajar con pilares se debe tener en cuenta las celdas adyacentes a estos.
 - En este caso y para simplificar los cálculos y el programa establecí las siguientes restricciones* para los pilares:
@@ -15,7 +17,7 @@
 
 - Trabajé con 2 condiciones de borde de tipo Dirichet para la frontera izquierda.
 
-###Manejo de Varios Pilares
+### Manejo de Varios Pilares
 
  - Para trabajar con varios pilares lo que se hace es registrar las celdas adyacentes de los pilares y el lado por el cual limita, de esta manera en el método start (que realiza las iteraciones para el cálculo de la presiones), para cada celda se pregunta si esta límita con algún pilar y por el lado que límita, para aplicar la ecuación correcta.*
  - *Debido a las restricciones a los pilares no ocurrirá que una celda delimite con más de un pilar (por ejemplo ala izquierda con un pilar y con otro por la derecha) pero si se requeriese se podría agregar más condiciones al método start y revisar que ecuaciones deberían cumplir las celdas para estos casos* 
@@ -23,7 +25,7 @@
 
 
 
-###Gráficos Presión
+### Gráficos Presión
 
 - El método medir_presiones toma un río dado y una posición x, para ese río y esa posición iterará con un pilar para cada posición y (a lo ancho del río ) posible.
 - Luego cálcula el promedio  de la presiones de la última columna
@@ -35,7 +37,7 @@
 - En Ambos casos la presión es mínima cuando el pilar se encuentra en el centro y parece ser el conveniente para disminuir la presión río abajo
 
 
-###Visualizar Río
+### Visualizar Río
 - Para la visualización del rio y sus pilares cree la método show_map() que grafica "un mapa" del río: 
 		- Los contornos de los pilares se muestran en  celdas Negras 
 		- Las celdas blancas representan el resto del río (o el pilar si se encuentra rodeada por celdas negra)
