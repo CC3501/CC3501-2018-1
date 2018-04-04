@@ -10,3 +10,6 @@ aux2/otros/
 
 # Ignora archivos taller
 taller/
+
+# Ignora accesos directos
+*.lnk
