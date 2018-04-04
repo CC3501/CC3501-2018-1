@@ -7,3 +7,6 @@ Cheat sheet numpy/
 
 # Ignora archivos residuales auxiliares
 aux2/otros/
+
+# Ignora archivos taller
+taller/
