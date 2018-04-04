@@ -1,5 +1,6 @@
 # CC3501-2018-1
-#### Taller Latex
+
+## Taller Latex
 
 Reposotorio contiene código fuente realizado y presentación sobre Latex.
 
