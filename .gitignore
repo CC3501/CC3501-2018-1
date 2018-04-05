@@ -13,3 +13,4 @@ taller/
 
 # Ignora accesos directos
 *.lnk
+.idea/
