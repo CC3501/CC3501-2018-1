@@ -22,16 +22,22 @@ class Rio:
         :param tol: Tolerancia
         :type ancho: int,float
         """
-        self._ancho = ancho  # privada
+
+        # Configuraciones de dimensiones
+        self._ancho = ancho
         self._largo = largo
         self._dh = dh
-
         self._h = int(float(ancho) / dh)
         self._w = int(float(largo) / dh)
 
+        # Matriz
         self._matrix = np.ones((self._h, self._w))
 
+        # Define la tolerancia
         self.tol = tol
+
+        # Indica última condición de borde usada
+        self._lastcb = 0
 
     def imprime(self):
         """
@@ -46,8 +52,17 @@ class Rio:
         :param t: Tiempo
         :return:
         """
+        self._lastcb = t
         for i in range(self._h):
             self._matrix[i][0] = 5 * t + 4 * i
+
+    def reset(self):
+        """
+        Resetea la matriz
+        :return:
+        """
+        self._matrix = np.ones((self._h, self._w))
+        self.cb(self._lastcb)
 
     def _single_iteration(self, matrix_new, matrix_old, omega):
         """
@@ -60,31 +75,28 @@ class Rio:
                 # Valor anterior de la matriz promediado
                 prom = 0
 
-                try:
-                    # General
-                    if 1 < y < self._h - 2 and x < self._w - 2:
-                        prom = 0.25 * (matrix_old[y - 1][x] + matrix_old[y + 1][x] + matrix_old[y][x - 1] +
-                                       matrix_old[y][x + 1] - 4 * matrix_old[y][x])
+                # General
+                if 1 < y < self._h - 2 and x < self._w - 2:
+                    prom = 0.25 * (matrix_old[y - 1][x] + matrix_old[y + 1][x] + matrix_old[y][x - 1] +
+                                   matrix_old[y][x + 1] - 4 * matrix_old[y][x])
 
-                    # Borde superior
-                    if y == 0 and x < self._w - 2:
-                        prom = 0.25 * (2 * matrix_old[y + 1][x] + matrix_old[y][x - 1] +
-                                       matrix_old[y][x + 1] - 4 * matrix_old[y][x])
+                # Borde superior
+                if y == 0 and x < self._w - 2:
+                    prom = 0.25 * (2 * matrix_old[y + 1][x] + matrix_old[y][x - 1] +
+                                   matrix_old[y][x + 1] - 4 * matrix_old[y][x])
 
-                    # Borde inferior
-                    if y == self._h - 1 and x < self._w - 2:
-                        prom = 0.25 * (2 * matrix_old[y - 1][x] + matrix_old[y][x - 1] + matrix_old[y][x + 1] - 4 *
-                                       matrix_old[y][x])
+                # Borde inferior
+                if y == self._h - 1 and x < self._w - 2:
+                    prom = 0.25 * (2 * matrix_old[y - 1][x] + matrix_old[y][x - 1] + matrix_old[y][x + 1] - 4 *
+                                   matrix_old[y][x])
 
-                    # Borde superior derecho
-                    if y == 0 and x == self._w - 1:
-                        prom = 0.25 * (2 * matrix_old[y + 1][x] + 2 * matrix_old[y][x - 1] - 4 * matrix_old[y][x])
+                # Borde superior derecho
+                if y == 0 and x == self._w - 1:
+                    prom = 0.25 * (2 * matrix_old[y + 1][x] + 2 * matrix_old[y][x - 1] - 4 * matrix_old[y][x])
 
-                    # Borde inferior derecho
-                    if y == self._h - 1 and x == self._w - 1:
-                        prom = 0.25 * (2 * matrix_old[y - 1][x] + 2 * matrix_old[y][x - 1] - 4 * matrix_old[y][x])
-                except:
-                    continue
+                # Borde inferior derecho
+                if y == self._h - 1 and x == self._w - 1:
+                    prom = 0.25 * (2 * matrix_old[y - 1][x] + 2 * matrix_old[y][x - 1] - 4 * matrix_old[y][x])
 
                 # Calcula nuevo valor
                 matrix_new[y][x] = matrix_old[y][x] + prom * omega
@@ -100,7 +112,7 @@ class Rio:
         :return:
         """
         not_zero = (mat_new != 0)
-        diff_relativa = (mat_old - mat_new)[not_zero] / mat_new[not_zero]
+        diff_relativa = (mat_old - mat_new)[not_zero]
         max_diff = np.max(np.fabs(diff_relativa))
         return [max_diff < tol, max_diff]
 
@@ -158,7 +170,7 @@ class Rio:
 
 
 # Instancia rio
-r = Rio(3, 7, 0.1, 0.001)
+r = Rio(3, 7, 0.1, 0.1)
 r.cb(10)
 
 # Se prueban varios w
@@ -167,6 +179,7 @@ iters = []
 errors = []
 for w in omegas:
     iters.append(r.start(w))
+    r.reset()
 r.plot()
 
 # Graficamos variación de iteraciones
