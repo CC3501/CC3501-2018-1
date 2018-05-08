@@ -10,6 +10,7 @@ import pygame
 
 # Colores
 COLOR_BLANCO = (255, 255, 255)
+COLOR_TRAYECTORIA = (50, 50, 50)
 
 
 class Planeta(object):
@@ -26,6 +27,11 @@ class Planeta(object):
         :param thetai: Posicion inicial en angulos (0,360)
         :param colorplaneta: Color del planeta
         """
+
+        # Verifica que las variables tengan sentido
+        assert rplaneta != 0, 'El radio del planeta no puede ser cero'
+        if rgiro != 0:
+            assert rgiro > rplaneta, 'El radio de giro no puede ser menor que el radio del planeta'
 
         # Guarda las variables
         self._velocidad_angular = w
@@ -47,7 +53,6 @@ class Planeta(object):
         if imagenplaneta == '':
             self._img = None
         else:
-
             # Carga la imagen, retorna surface
             self._img = pygame.image.load(imagenplaneta)
 
@@ -63,6 +68,7 @@ class Planeta(object):
 
         # Actualiza el ángulo
         self._theta += self._velocidad_angular * dt
+        self._theta %= 360
 
         # Pasa a radianes
         theta_rad = self._theta * math.pi / 180
@@ -99,7 +105,16 @@ class Planeta(object):
         """
         return self._posicion_absoluta
 
-    def dibujar(self, surface):
+    def dibujar_trayectoria(self, surface):
+        """
+        Dibuja la trayectoria del planeta
+        :param surface:
+        :return:
+        """
+        if self._radio_giro > 0:
+            pygame.draw.circle(surface, COLOR_TRAYECTORIA, self._pos_origen, self._radio_giro, 1)
+
+    def dibujar_planeta(self, surface):
         """
         Dibuja el Planeta en un canvas
         :param surface: Superficie de Pygame

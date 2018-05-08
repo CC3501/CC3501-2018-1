@@ -40,8 +40,9 @@ surface = pygame.display.set_mode((PANTALLA_ANCHO, PANTALLA_ALTO))
 Crea el reloj de la aplicación
 """
 clock = pygame.time.Clock()
-dt = 1.0 / FPS  # Cuánto tiempo real pasa entre cada cuadro
+DT = 1.0 / FPS  # Cuánto tiempo real pasa entre cada cuadro
 t = 0.0  # Tiempo de simulación
+dt = DT  # Dt variable, puede ser 0 ó DT dependiendo del input del usuario
 
 """
 Objetos del modelo, arreglo de planetas
@@ -75,21 +76,31 @@ while True:
             exit()
         elif event.type == KEYDOWN:
             if event.key == K_RETURN:  # Al teclear Enter se añade un planeta aleatorio
-
-                nuevo_planeta = generar_planeta_aleatorio(wlims=[50, 90],
+                nuevo_planeta = generar_planeta_aleatorio(wlims=[50, 150],
                                                           rplanetalim=[10, 30],
                                                           rgirolim=[80, PANTALLA_ANCHO / 2],
                                                           imgprob=1.0
                                                           )
                 nuevo_planeta.definir_origen(*sol.obtener_origen())
                 planetas.append(nuevo_planeta)
+            elif event.key == K_SPACE:  # Al teclear espacio se pausa o continúa
+                if dt == 0:
+                    dt = DT
+                else:
+                    dt = 0
+
+    """
+    Se dibujan las trayectorias de cada planeta
+    """
+    for p in planetas:
+        p.dibujar_trayectoria(surface)
 
     """
     Se dibujan los planetas
     """
     for p in planetas:
         p.actualizar_posicion(dt)
-        p.dibujar(surface)
+        p.dibujar_planeta(surface)
 
     # Flip surface
     pygame.display.flip()
