@@ -17,7 +17,7 @@ class Planeta(object):
     Planeta, tiene velocidad y radio de giro
     """
 
-    def __init__(self, w=0, rplaneta=0, rgiro=0, thetai=0, colorplaneta=COLOR_BLANCO):
+    def __init__(self, w=0, rplaneta=0, rgiro=0, thetai=0, colorplaneta=COLOR_BLANCO, imagenplaneta=''):
         """
         Constructor
         :param w: Velocidad angular
@@ -42,6 +42,17 @@ class Planeta(object):
 
         # Actualiza la posición en t=0
         self.actualizar_posicion(0)
+
+        # Si se pasa una imagen como argumento se carga, si no se define como None
+        if imagenplaneta == '':
+            self._img = None
+        else:
+
+            # Carga la imagen, retorna surface
+            self._img = pygame.image.load(imagenplaneta)
+
+            # Escala la superficie al tamaño del radio de giro
+            self._img = pygame.transform.scale(self._img, [self._radio_planeta * 2, self._radio_planeta * 2])
 
     # noinspection PyTypeChecker
     def actualizar_posicion(self, dt):
@@ -103,16 +114,22 @@ class Planeta(object):
         x_r = int(x_r)
         y_r = int(y_r)
 
-        # circle(Surface, color, pos, radius, width=0) -> Rect
-        pygame.draw.circle(surface, self._color, [x_r, y_r], self._radio_planeta)
+        # Si se definió una imagen se dibuja
+        if self._img is not None:
+            # Se resta el radio para centrar
+            surface.blit(self._img, [x_r - self._radio_planeta, y_r - self._radio_planeta])
+        else:
+            # circle(Surface, color, pos, radius, width=0) -> Rect
+            pygame.draw.circle(surface, self._color, [x_r, y_r], self._radio_planeta)
 
 
-def generar_planeta_aleatorio(wlims, rplanetalim, rgirolim):
+def generar_planeta_aleatorio(wlims, rplanetalim, rgirolim, imgprob=0.5):
     """
     Genera un planeta aleatorio
     :param wlims: Límites velocidad de giro
     :param rplanetalim: Límites del radio del planeta
     :param rgirolim: Límites radio de giro del planeta
+    :param imgprob: Probabilidad de cargar imagen en el planeta
     :return: Planeta
     """
 
@@ -123,5 +140,17 @@ def generar_planeta_aleatorio(wlims, rplanetalim, rgirolim):
     thetai = random.randint(0, 360)
     color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
 
+    # Se carga imagen según probabilidad
+    if random.random() <= imgprob:
+        img = 'imagenes/planeta{0}.png'.format(random.randint(1, 10))
+    else:
+        img = ''
+
     # Retorna un planeta nuevo
-    return Planeta(w=w, rplaneta=rplaneta, rgiro=rgiro, thetai=thetai, colorplaneta=color)
+    return Planeta(w=w,
+                   rplaneta=rplaneta,
+                   rgiro=rgiro,
+                   thetai=thetai,
+                   colorplaneta=color,
+                   imagenplaneta=img
+                   )

@@ -49,7 +49,7 @@ Objetos del modelo, arreglo de planetas
 planetas = []
 
 # Crea un sol y lo añade a los planetas
-sol = Planeta(rplaneta=50, colorplaneta=(255, 255, 0))  # Color amarillo
+sol = Planeta(rplaneta=50, imagenplaneta='imagenes/sol.png')  # Color amarillo
 sol.definir_origen(PANTALLA_ANCHO / 2, PANTALLA_ALTO / 2)  # El sol está centrado
 planetas.append(sol)
 
@@ -78,7 +78,8 @@ while True:
 
                 nuevo_planeta = generar_planeta_aleatorio(wlims=[50, 90],
                                                           rplanetalim=[10, 30],
-                                                          rgirolim=[80, PANTALLA_ANCHO / 2]
+                                                          rgirolim=[80, PANTALLA_ANCHO / 2],
+                                                          imgprob=1.0
                                                           )
                 nuevo_planeta.definir_origen(*sol.obtener_origen())
                 planetas.append(nuevo_planeta)
