@@ -30,7 +30,7 @@ class Planeta(object):
 
         # Verifica que las variables tengan sentido
         assert rplaneta != 0, 'El radio del planeta no puede ser cero'
-        if rgiro != 0:
+        if rgiro != 0: #sol
             assert rgiro > rplaneta, 'El radio de giro no puede ser menor que el radio del planeta'
 
         # Guarda las variables

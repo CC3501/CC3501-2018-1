@@ -54,6 +54,8 @@ sol = Planeta(rplaneta=50, imagenplaneta='imagenes/sol.png')  # Color amarillo
 sol.definir_origen(PANTALLA_ANCHO / 2, PANTALLA_ALTO / 2)  # El sol está centrado
 planetas.append(sol)
 
+
+
 """
 Bucle de la aplicación
 """
@@ -63,9 +65,6 @@ while True:
     clock.tick(FPS)
 
     pygame.display.set_caption('Simulador planetitas (FPS={0})'.format(int(clock.get_fps())))
-
-    # Pinta la superficie
-    surface.fill(COLOR_FONDO)
 
     """
     Controlador
@@ -79,7 +78,7 @@ while True:
                 nuevo_planeta = generar_planeta_aleatorio(wlims=[50, 150],
                                                           rplanetalim=[10, 30],
                                                           rgirolim=[80, PANTALLA_ANCHO / 2],
-                                                          imgprob=1.0
+                                                          imgprob=1
                                                           )
                 nuevo_planeta.definir_origen(*sol.obtener_origen())
                 planetas.append(nuevo_planeta)
@@ -88,6 +87,9 @@ while True:
                     dt = DT
                 else:
                     dt = 0
+
+    # Pinta la superficie
+    surface.fill(COLOR_FONDO)
 
     """
     Se dibujan las trayectorias de cada planeta
