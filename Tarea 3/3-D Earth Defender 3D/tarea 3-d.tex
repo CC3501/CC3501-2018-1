@@ -1,0 +1,165 @@
+% Template:     Template Controles LaTeX
+% Documento:    Archivo principal
+% Versión:      2.1.9 (14/06/2018)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R. @ppizarror
+%        Facultad de Ciencias Físicas y Matemáticas
+%        Universidad de Chile
+%        pablo.pizarro@ing.uchile.cl, ppizarror.com
+%
+% Sitio web:    [http://latex.ppizarror.com/Template-Controles/]
+% Licencia MIT: [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[letterpaper,11pt]{article} % Articulo tamaño carta, 11pt
+\usepackage[utf8]{inputenc} % Codificación UTF-8
+
+% PLAZO DE ENTREGA
+\def\plazoentrega {Algún día}
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\tituloevaluacion {Tarea 3-D: Earth Defender 3D}
+\def\indicacionevaluacion {Fecha de entrega: \plazoentrega} % Opcional
+
+\def\autordeldocumento {CC3501-1}
+\def\nombredelcurso {Modelación y Computación Gráfica para Ingenieros}
+\def\codigodelcurso {CC3501-1}
+
+\def\nombreuniversidad {Universidad de Chile}
+\def\nombrefacultad {Facultad de Ciencias Físicas y Matemáticas}
+\def\departamentouniversidad {Departamento de la Universidad}
+\def\imagendepartamento {dcc}
+\def\imagendepartamentoescala {0.2}
+\def\localizacionuniversidad {Santiago, Chile}
+
+% EQUIPO DOCENTE
+\def\equipodocente {
+	\textbf{Prof: Nancy Hitschfeld K.} \\
+	Auxiliares: Pablo Pizarro R., Pablo Polanco Galleguillos, Mauricio Araneda H. \\
+	Ayudantes: Iván Torres, María José Trujillo Berger \\
+}
+
+% CONFIGURACIONES
+\input{lib/config}
+
+% IMPORTACIÓN DE LIBRERÍAS
+\input{lib/env/imports}
+
+% IMPORTACIÓN DE FUNCIONES
+\input{lib/cmd/all}
+
+% IMPORTACIÓN DE ESTILOS
+\input{lib/style/all}
+
+% CONFIGURACIÓN INICIAL DEL DOCUMENTO
+\input{lib/cfg/init}
+
+% INICIO DE LAS PÁGINAS
+\begin{document}
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\input{lib/cfg/page}
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\sectionanum{Problema}
+
+En un futuro muy, muy lejano …
+\newp 
+Una lluvia de meteoritos acecha la tierra. Afortunadamente, un equipo de trabajo de la fcfm la ha detectado a tiempo y los ingenieros han diseñado naves capaces de destruirlos.
+
+\newp Las naves tienen la capacidad de moverse libremente en el sector de la Exosfera. Los meteoritos aceleran en su caída debido a la fuerza de gravedad. \\
+
+\insertimage{foto}{width=12cm}{*Imágenes referenciales, pues sus modelos deben ser tridimensionales.}
+
+\textbf{En esta tarea, debe utilizar OpenGL para dibujar. Como lenguaje base se recomienda utilizar Python.}
+
+\sectionanum{Modelos (3 puntos)}
+
+Dibuje 3 naves espaciales utilizando OpenGL y distintas estrategias:
+
+\begin{itemize}
+	\item Una nave construida en base a figuras GLUT, utilizando al menos unas 4.
+	\item Una nave generada a partir de un fichero STL, OBJ u otro formato (Puede encontrar figuras en internet).
+	\item Una tercera nave dibujada por usted en base a especificación manual de vértices y polígonos.
+\end{itemize}
+
+Dibuje un meteorito, una bala y la superficie del planeta tierra como usted estime conveniente. Todos sus modelos deben tridimensionales y utilizar sombreado, ya sea FLAT o SMOOTH. Implemente un programa que permita visualizar todos sus modelos.
+
+\sectionanum{El juego (3 puntos)}
+
+Para implementar correctamente el juego debe considerar lo siguiente:
+
+\begin{itemize}
+\item Pantalla de selección \textbf{(0,5 puntos)}:
+
+\begin{itemize}
+	\item Al comienzo del juego se inicia una pantalla de selección donde es posible escoger una de las tres naves espaciales. Con las flechas del teclado $\leftarrow$, $\rightarrow$ debe ser posible cambiar la nave seleccionada. Con \quotes{espacio} se escoge la nave y comienza la partida.
+\end{itemize}
+
+\item Control e interacciones \textbf{(1,5 puntos)}:
+
+\begin{itemize}
+	\item De la parte superior de la pantalla comienzan a caer meteoritos (respetando la fuerza de gravedad) de tamaño arbitrario hacia la tierra (ubicada en la parte inferior de la pantalla).
+	- No se preocupe de las colisiones entre meteoritos.
+	- Con las flechas del teclado es posible mover la nave por toda la pantalla. Al presionar \quotes{espacio} la nave dispara hacia arriba.
+	- Si una bala alcanza un meteorito este es destruido.
+	- Las naves espaciales deben poseer al menos una fuente de luz direccional, la que puede ser encendida o apagada al presionar \quotes{z} (el efecto de esta luz debe ser claramente visible).
+\end{itemize}
+
+\item Puntuación y aumento de dificultad \textbf{(1 punto)}:
+
+\begin{itemize}
+	\item Al destruir un meteorito el jugador gana 1 punto, el que debe ser impreso en la consola.
+	\item Si un meteorito impacta la tierra, se debe imprimir un aviso en la consola. La tierra soporta un máximo de 10 impactos.
+	\item Cada 10 meteoritos destruidos, aumenta la velocidad de generación de meteoritos. Imprima en consola un aviso.
+\end{itemize}
+
+\end{itemize}
+
+Si bien los modelos deben ser en 3D. Todos los movimientos del juego se ubican en un mismo plano, por lo que la física puede ser modelada en 2D. Localice la cámara de forma tal que se visualice de forma similar a la imagen presentada. Configure una fuente de luz (el sol).
+\newp
+\begin{center}
+	\textit{¡El destino de la tierra está en tus manos!}
+\end{center}
+
+\sectionanum{Bonus Track (máximo 1 punto sobre la nota)}
+
+Elija uno o dos de los siguientes \textbf{(0,5 puntos cada uno)}:
+
+\begin{itemize}
+	\item Cuando el meteorito sea destruido, genere animación que represente el proceso.
+	\item Si un meteorito relativamente grande es destruido, se divide en dos meteoritos pequeños.
+	\item Evite que los meteoritos se traslapen, implemente un choque elástico o inelástico entre ellos.
+	\item La nave resiste un máximo de 3 impactos con meteoritos. A medida que vaya siendo dañada, debe mostrar daños, cambiando de color y ralentizando su movimiento.
+	\item Implemente un ataque alternativo y un ataque especial (munición limitada).
+\end{itemize}
+
+\sectionanum{Presentación-Informe}
+
+Se espera que en el informe de esta tarea se explique la metodología llevada a cabo para resolver el problema, la estructura de su código, los resultados y una breve discusión sobre los resultados obtenidos. 
+
+\subsectionanum{Observaciones}
+
+\begin{itemize}
+	\item \textbf{Plazo de Entrega: \plazoentrega. No se aceptan atrasos.}
+	\item No se reciben tareas por otro medio que no sea la sección habilitada en u-cursos.
+	\item Entregue TODOS los archivos que sean necesarios para la correcta ejecución de su programa.
+	\item Puede reenviar su tarea dentro del plazo. En este caso, procure subir nuevamente TODOS sus archivos. El equipo docente sólo tiene acceso a la última entrega que usted realiza.
+	\item La presentación-informe DEBE estar en formato .pdf, no se revisarán otros formatos.
+	\item Las tareas se revisarán utilizando Python 2.7 y sus librerías (instaladores en ucursos).
+	\item Para consultas, se ofrece soporte en el lenguaje Python. También puede utilizar C++ o Java (junto a OpenGL), pero va por su cuenta y debe presentar el código entregado funcionando en su computador.
+\end{itemize}
+
+\subsectionanum{Hints}
+
+\begin{itemize}
+	\item Planifique su tiempo y comience su tarea con anticipación. No comience directamente a programar. Identifique fragmentos de algoritmos, formule clases y objetos útiles, si lo necesita, diseñe máquinas de estados.
+	\item Construya su programa de manera incremental, esto es, vaya respaldado su código de forma que siempre disponga de algo que \quotes{funcione}.
+	\item Se recomienda utilizar pequeños programas que simplemente dibujen cada una de las partes del juego (objetos, personajes, escenario, etc..). Del mismo modo, puede construir pequeños programas que vayan añadiendo las interacciones entre los distintos actores.
+	\item Una buena metodología es diseñar una clase por cada tipo de actor que interfiera en su programa.
+\end{itemize}
+
+% FIN DEL DOCUMENTO
+\end{document}

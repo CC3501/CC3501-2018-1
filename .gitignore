@@ -2,7 +2,7 @@
 *.pyc
 
 # Ignora carpeta de tareas
-tarea *
+# tarea *
 Cheat sheet numpy/
 
 # Ignora archivos residuales auxiliares

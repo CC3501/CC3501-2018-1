@@ -1,0 +1,231 @@
+% Template:     Template Controles LaTeX
+% Documento:    Archivo principal
+% Versión:      1.2.9 (05/02/2018)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R.
+%        Facultad de Ciencias Físicas y Matemáticas
+%        Universidad de Chile
+%        pablo.pizarro@ing.uchile.cl, ppizarror.com
+%
+% Sitio web:    [http://latex.ppizarror.com/Template-Controles/]
+% Licencia MIT: [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[letterpaper,11pt]{article} % Articulo tamaño carta, 11pt
+\usepackage[utf8]{inputenc} % Codificación UTF-8
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\tituloevaluacion {Tarea 1}
+\def\indicacionevaluacion {Fecha de entrega: 15/04/19 23:59 hrs}
+
+\def\autordeldocumento {Pablo Pizarro}
+\def\nombredelcurso {Modelación y Computación Gráfica para Ingenieros}
+\def\codigodelcurso {CC3501-1}
+
+\def\nombreuniversidad {Universidad de Chile}
+\def\nombrefacultad {Facultad de Ciencias Físicas y Matemáticas}
+\def\departamentouniversidad {Departamento de Ciencias de la Computación}
+\def\imagendepartamento {departamentos/dcc}
+\def\imagendepartamentoescala {0.2}
+\def\localizacionuniversidad {Santiago, Chile}
+
+% EQUIPO DOCENTE
+\def\equipodocente {
+	\textbf{Prof: Nancy Hitschfeld K.} \\
+	Auxiliares: Pablo Pizarro R., Pablo Polanco Galleguillos, Mauricio Araneda H. \\
+	Ayudantes: Iván Torres, María José Trujillo Berger \\
+}
+
+% CONFIGURACIONES
+\input{lib/config}
+
+% IMPORTACIÓN DE LIBRERÍAS
+\input{lib/imports}
+
+% IMPORTACIÓN DE FUNCIONES
+\input{lib/function/control}
+\input{lib/function/core}
+\input{lib/function/elements}
+\input{lib/function/equation}
+\input{lib/function/image}
+\input{lib/function/title}
+
+% IMPORTACIÓN DE ESTILOS
+\input{lib/styles}
+
+% CONFIGURACIÓN INICIAL DEL DOCUMENTO
+\input{lib/initconf}
+
+% INICIO DE LAS PÁGINAS
+\begin{document}
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\input{lib/pageconf}
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\sectionanum{Problema}
+
+En una región del litoral central Chileno se planea construir una planta
+industrial destinada a la refinación del petróleo. El diseño propuesto
+considera una gran emisión de calor a la atmósfera, por lo cual en la
+evaluación de impacto ambiental se le pide a usted, como alumno del curso de computación gráfica, modelar el comportamiento térmico de la atmósfera con la planta en operación. \\
+
+\begin{wrapfigure}{r}{0.6\textwidth}
+	\includegraphics[width=\textwidth]{perfil.pdf}
+\end{wrapfigure}
+
+\par Se le pide modelar un perfil del litoral (corte transversal en dirección
+Este--Oeste) de 4 [km] de ancho y 2 [km] de alto parecido al de la figura. La
+planta se ubicará en la playa (entendida como el borde entre el mar y las
+montañas; en la figura se indica por una franja roja).
+
+Por simplicidad consideraremos que la temperatura de la atmósfera $T(x,y)$ cumple la
+ecuación de Poisson:
+$$
+\frac{\partial^2 T(x, y)}{\partial x^2} +
+\frac{\partial^2 T(x, y)}{\partial y^2} = \rho(x,y)
+$$
+\\
+En donde $\rho(x,y)$ es una \textbf{función cualquiera} que depende de la distancia $(x,y)$ con respecto al centro de la planta. Nótese que si $\rho(x,y)=0$ se tiene la ecuación de Laplace vista en clases. Esta función se debe proveer a los métodos que resuelvan el sistema como si fuese una variable (Ver código \ref{funporvalor} en Anexo).
+
+\newpage
+\sectionanum{Condiciones de borde}
+
+La temperatura de la superficie del mar varía a lo largo del día de acuerdo a
+la siguiente receta: T = 4\textordmasculine C entre las \texttt{00:00} y las
+\texttt{08:00} hrs; luego T aumenta linealmente hasta alcanzar los
+20\textordmasculine C a las \texttt{16:00}; y finalmente T decrece linealmente
+hasta alcanzar T=4\textordmasculine C a las \texttt{24:00} (Ver figura \ref{temp} del anexo). Para el problema asumiremos que la temperatura superficial del mar varía en la forma descrita independiente de la temperatura atmosférica.
+
+\newp La temperatura de la atmósfera (en ausencia de fuentes de calor que no sean la
+superficie del mar) varía en el tiempo igual que la temperatura en la
+superficie del mar pero además decae linealmente en 6\textordmasculine C cada
+1000 [m]. Asumiremos que nuestra caja es suficientemente grande para que los
+bordes de nuestro perfil no se vean afectados por la planta industrial.
+
+\newp Por su parte, la temperatura del suelo en la región continental es constante e
+igual a 20\textordmasculine C todo el día, excepto por sobre los 1800 [m],
+donde hay nieve (que consideraremos a 0 \textordmasculine C).
+
+\newp En cuanto a la planta, esta tiene chimeneas que cubren un ancho de 120 [m]
+ubicada al nivel del mar. El comportamiento térmico de la chimenea a lo largo
+del día esta descrito por la siguiente expresión (como función de la hora $t$):
+
+$$
+T = 450 \left(  \cos\left( \frac{\pi}{12}\cdot t \right) + 2 \right)
+\quad [{\rm \degree C}];\ t \in [0,24]
+$$
+
+\sectionanum{Geografía}
+
+El perfil geográfico a estudiar está detallado en la figura y contiene algunos
+elementos aleatorios que dependen de \texttt{RRR} (los últimos 3 dígitos de su
+\texttt{RUT}, antes del dígito verificador). En particular:
+
+\begin{itemize}[label={--}]
+	\item Partiendo del Oeste, la superficie del mar cubre $1200 + 400 \times
+	0.\texttt{RRR}$ [m].
+	\item A partir del borde costero, la planta industrial tiene chimeneas
+	cubriendo un ancho plano de 120 [m] (la región roja de la figura).
+	\item Luego de la planta hay una inclinación suave que aumenta 100 [m] de
+	altura por cada 300 [m] que se recorre hacia el Este. Esta inclinación llega
+	hasta 400 [m] a partir del borde costero.
+	\item Luego de la pequeña inclinación, viene la cordillera de la costa
+	que caracterizamos por dos cimas triangulares. La primera tiene una altura
+	máxima de $1500 + 200 \times 0.\texttt{RRR}$ [m], la cual se ubica a 1200 [m]
+	de la orilla del mar.
+	\item A continuación hay un punto de menor altura: $1300 + 200
+	\times\texttt{0.RRR}$ [m], el cual se ubica a 1500 [m] de la orilla del mar.
+	\item Luego viene una segunda cima, más alta que la primera que alcanza
+	$1850 + 100 \times 0.\texttt{RRR}$ [m] a 2000 [m] desde la orilla del mar.
+	Recuerde que todos los puntos de la superficie que están a más de 1800 [m]
+	están cubiertos de nieve a 0 \textordmasculine C.
+	\item Decida Ud. qué hacer con el tramo que falta.
+\end{itemize}
+
+\sectionanum{Requerimientos}
+
+\begin{enumerate}
+	\item Elija una discretización apropiada para resolver el problema, identifique las condiciones de borde y las ecuaciones presentes en el sistema.
+	\item Genere el terreno siguiendo las instrucciones previamente mencionadas en la sección \textit{Geografía}.
+	\item Con $\rho(x,y)=0$, para las horas ${t=0, 8, 12, 16, 20}$ grafique la temperatura atmosférica (junto a las condiciones geográficas). Use el método de \textbf{sobre-relajación sucesiva} \footnote{De no hacerlo así obtendrá la nota mínima.} para resolver numéricamente el problema. Explore varios valores de $\omega$ entre 0 y 2, puede usar también la fórmula del $\omega$ óptimo vista en clases (Ver anexo), en donde $n$ y $m$ son el alto y ancho de la matriz.
+	\item Con $\rho(x,y)=\frac{1}{\sqrt{x^2+y^2+120}}$, $x$ e $y$ en metros, resuelva el sistema para las horas anteriormente descritas.
+\end{enumerate}
+
+\sectionanum{Informe}
+
+El informe debe incluir:
+
+\begin{itemize}
+	\item Breve descripción del problema. \textbf{(0.25pto)}
+	\item Descripción de la generación del terreno. \textbf{(0.5pto)}
+	\item Descripción de la solución numérica.  \textbf{(0.25pto)}
+	\item Resultados obtenidos y posterior análisis de los mismos.  \textbf{(2.5pto)} \\Responda las siguientes preguntas:
+	\vspace{-0.1cm}
+	\begin{itemize}
+		\item ¿Los resultados tienen sentido?
+		\item ¿Afecta en algo el mar al sistema?
+		\item ¿Las condiciones geográficas afectan al sistema?
+		\item ¿En qué horas se obtiene la menor temperatura media en el sistema?
+		\item ¿Cambia en algo la solución del sistema si $\rho(x,y) \neq 0$?
+	\end{itemize}
+	\item Use el método de sobre-relajación sucesiva con distintos $\omega$ y estudie el tiempo que tarda su programa en generar las soluciones tras un número de iteraciones \textit{fijo}, grafique $\omega$ vs tiempo de ejecución y comente los resultados.  \textbf{(2.0pto)}
+	\item Conclusiones. \textbf{(0.5pto)}
+\end{itemize}
+
+\textbf{Formato PDF}: Los informes entregados en otro formato serán evaluados con nota \textbf{1.0} \\
+\vspace{-0.2cm}
+\par \textbf{Fecha de entrega}: Domingo 15 de Abril a las 23:59 hrs.
+
+\newpage
+\sectionanum{Condiciones de entrega}
+
+\begin{itemize}
+	\item La tarea es individual y las copias ser\'an penalizadas.
+	\item Entregas solo vía U-Cursos.
+	\item Adjuntar archivo \texttt{README.txt} con instrucciones de ejecución.
+	\item Recuerde adjuntar \textbf{TODOS} los archivos en cada entrega, ya que los auxiliares y ayudantes sólo tienen acceso a la \'ultima entrega de su tarea.
+	\item \textbf{NO} se aceptarán archivos atrasados una vez el plazo haya finalizado, aunque esto implique que su tarea no ejecute.
+	\item Al hacer el informe usted debe decidir qué es interesante y
+	agregar las figuras correspondientes. No olvide anotar los ejes, las unidades e incluir una \emph{caption} o título que describa el contenido de cada figura.
+	
+	\item No olvide indicar su RUT en el informe.
+	
+	\item Repartición de puntaje: 50\% implementación y resolución del problema; 50\% calidad del reporte entregado: demuestra comprensión del problema y su solución, claridad del lenguaje, calidad de las figuras utilizadas.
+	\end {itemize}
+	
+\sectionanum{Recomendaciones}
+
+\begin{itemize}
+	\normalsize\item Revisar documentaci\'on y tutoriales de Python para obtener en detalle las funciones disponibles y ejemplos de uso.
+	\normalsize\item Consultas a trav\'es del foro de U-Cursos o auxiliares.
+	\normalsize\item Sea ordenado con su c\'odigo , agregue comentarios y utilice nombre \'utiles en sus variables y funciones.
+	\normalsize\item Planifique su tiempo y comience su tarea con anticipaci\'on. No comience a programar directamente. Comprenda el problema, realice esquemas y plantee un algoritmo de soluci\'on.
+	\normalsize\item Considere el uso de la programación orientada a objetos para el desarrollo de su solución (ver auxiliares).
+\end{itemize}
+
+\sectionanum{Anexos}
+
+\insertimage[\label{temp}]{temperatura}{width=10cm}{Variación de temperatura del sistema}
+
+\begin{sourcecode}[\label{funporvalor}]{Python}{Ejemplo paso función por argumento}
+def rho(x, y):
+	return 1 / (x**2 + y**2 + 120)**0.5
+
+...
+
+def iniciarIteracion(f):
+	...
+	matriz[i][j] = f(i/h, j/h)	# h dimension grilla
+
+...
+
+iniciarIteracion(rho) # Se pasa la funcion rho por variable
+\end{sourcecode}
+
+\insertequation{\omega = \frac{4}{2+\sqrt{4-\pow{\bigg(\cos{\big(\frac{\pi}{n-1}\big)}+\cos{\big(\frac{\pi}{m-1}\big)}\bigg)}{2}}}}
+
+% FIN DEL DOCUMENTO
+\end{document}

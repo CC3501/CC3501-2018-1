@@ -1,0 +1,126 @@
+% Template:     Template Controles LaTeX
+% Documento:    Archivo principal
+% Versión:      2.1.9 (14/06/2018)
+% Codificación: UTF-8
+%
+% Autor: Pablo Pizarro R. @ppizarror
+%        Facultad de Ciencias Físicas y Matemáticas
+%        Universidad de Chile
+%        pablo.pizarro@ing.uchile.cl, ppizarror.com
+%
+% Sitio web:    [http://latex.ppizarror.com/Template-Controles/]
+% Licencia MIT: [https://opensource.org/licenses/MIT]
+
+% CREACIÓN DEL DOCUMENTO
+\documentclass[letterpaper,11pt]{article} % Articulo tamaño carta, 11pt
+\usepackage[utf8]{inputenc} % Codificación UTF-8
+
+% PLAZO DE ENTREGA
+\def\plazoentrega {Algún día}
+
+% INFORMACIÓN DEL DOCUMENTO
+\def\tituloevaluacion {Tarea 3-B: Cerros Fractales}
+\def\indicacionevaluacion {Fecha de entrega: \plazoentrega} % Opcional
+
+\def\autordeldocumento {CC3501-1}
+\def\nombredelcurso {Modelación y Computación Gráfica para Ingenieros}
+\def\codigodelcurso {CC3501-1}
+
+\def\nombreuniversidad {Universidad de Chile}
+\def\nombrefacultad {Facultad de Ciencias Físicas y Matemáticas}
+\def\departamentouniversidad {Departamento de la Universidad}
+\def\imagendepartamento {dcc}
+\def\imagendepartamentoescala {0.2}
+\def\localizacionuniversidad {Santiago, Chile}
+
+% EQUIPO DOCENTE
+\def\equipodocente {
+	\textbf{Prof: Nancy Hitschfeld K.} \\
+	Auxiliares: Pablo Pizarro R., Pablo Polanco Galleguillos, Mauricio Araneda H. \\
+	Ayudantes: Iván Torres, María José Trujillo Berger \\
+}
+
+% CONFIGURACIONES
+\input{lib/config}
+
+% IMPORTACIÓN DE LIBRERÍAS
+\input{lib/env/imports}
+
+% IMPORTACIÓN DE FUNCIONES
+\input{lib/cmd/all}
+
+% IMPORTACIÓN DE ESTILOS
+\input{lib/style/all}
+
+% CONFIGURACIÓN INICIAL DEL DOCUMENTO
+\input{lib/cfg/init}
+
+% INICIO DE LAS PÁGINAS
+\begin{document}
+
+% CONFIGURACIÓN DE PÁGINA Y ENCABEZADOS
+\input{lib/cfg/page}
+
+% ======================= INICIO DEL DOCUMENTO =======================
+
+\sectionanum{Problema}
+
+Es usual que los fines de semana Don Pedro y su familia salgan a caminar. El destino más frecuente es recorrer los cerros del fundo. Las irregularidades del camino pueden ser modeladas como utilizando una técnica fractal. \\
+
+\insertimage{foto}{width=12cm}{\texttt{D O N \ P E D R O}}
+
+\textbf{En esta tarea, debe utilizar OpenGL para dibujar. Como lenguaje base se recomienda utilizar Python.}
+
+\sectionanum{Terreno (2,5 puntos)}
+
+Genere un terreno (superficie tridimensional) utilizando alguna técnica fractal. Su terreno debe utilizar iluminación FLAT o SMOOTH.
+
+\sectionanum{Don Pedro (2,5 puntos)}
+
+Dibuje a Don Pedro (u otro personaje) en 3D utilizando OpenGL, puede utilizar figuras GLUT o importar figuras STL, OBJ u otras. Sus piernas deben tener articulaciones (al menos una por cada pierna) con el fin de simular el efecto de caminar. Esto puede implementarlo utilizando alguna animación periódica.
+Don Pedro debe utilizar iluminación FLAT o SMOOTH.
+
+\sectionanum{Movimiento y vistas (1 puntos)}
+
+El terreno puede ser visto desde una cámara aérea fija o desde el mismo Don Pedro. Con la tecla \quotes{z} se debe alternar entre estas dos vistas.
+Con las flechas $\leftarrow$, $\rightarrow$ Don Pedro debe girar hacia la izquierda o derecha. Con las flechas $\uparrow$, $\downarrow$ Don Pedro debe moverse hacia adelante y atrás, estando siempre sobre la superfície del terreno e inclinándose según la pendiente de la misma.
+Configure una o dos fuentes de luz.
+
+\sectionanum{Bonus Track (máximo 1 punto sobre la nota)}
+
+Configure dos fuentes de luz, que representarán el sol y la luna (dibújelos utilizando esferas GLUT u otra estrategia). Ambas deben moverse en el cielo alternando entre el día y la noche. El cielo debe cambiar de color en este proceso. Procure que toda la secuencia ocurra en menos de 40 segundos.
+
+\sectionanum{Presentación-Informe}
+
+Se espera que en el informe de esta tarea se explique la metodología llevada a cabo para resolver el problema, la estructura de su código, los resultados y una breve discusión sobre los resultados obtenidos. 
+
+\newp Dedique particular énfasis en:
+
+\begin{itemize}
+	\item Explicite el algoritmo y la estructura de datos utilizada para generar el terreno fractal.
+	\item Explicite la fórmula utilizada para simular la caminata.
+\end{itemize}
+
+\subsectionanum{Observaciones}
+
+\begin{itemize}
+	\item \textbf{Plazo de Entrega: \plazoentrega. No se aceptan atrasos.}
+	\item No se reciben tareas por otro medio que no sea la sección habilitada en u-cursos.
+	\item Entregue TODOS los archivos que sean necesarios para la correcta ejecución de su programa.
+	\item Puede reenviar su tarea dentro del plazo. En este caso, procure subir nuevamente TODOS sus archivos. El equipo docente sólo tiene acceso a la última entrega que usted realiza.
+	\item La presentación-informe DEBE estar en formato .pdf, no se revisarán otros formatos.
+	\item Las tareas se revisarán utilizando Python 2.7 y sus librerías (instaladores en ucursos).
+	\item Para consultas, se ofrece soporte en el lenguaje Python. También puede utilizar C++ o Java (junto a OpenGL), pero va por su cuenta y debe presentar el código entregado funcionando en su computador.
+\end{itemize}
+
+\subsectionanum{Hints}
+
+\begin{itemize}
+	\item Planifique su tiempo y comience su tarea con anticipación. No comience directamente a programar. Identifique fragmentos de algoritmos, formule clases y objetos útiles, si lo necesita, diseñe máquinas de estados.
+	\item Construya su programa de manera incremental, esto es, vaya respaldado su código de forma que siempre disponga de algo que \quotes{funcione}.
+	\item Se recomienda utilizar pequeños programas que simplemente dibujen cada una de las partes del juego (objetos, personajes, escenario, etc..). Del mismo modo, puede construir pequeños programas que vayan añadiendo las interacciones entre los distintos actores.
+	\item Una buena metodología es diseñar una clase por cada tipo de actor que interfiera en su programa.
+\end{itemize}
+
+% FIN DEL DOCUMENTO
+\end{document}
