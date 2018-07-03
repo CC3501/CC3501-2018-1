@@ -17,5 +17,5 @@ taller/
 
 # Otros
 *.aux
-*.synctex
+*.synctex.gz
 *.log
