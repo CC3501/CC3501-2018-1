@@ -14,3 +14,8 @@ taller/
 # Ignora accesos directos
 *.lnk
 .idea/
+
+# Otros
+*.aux
+*.synctex
+*.log
