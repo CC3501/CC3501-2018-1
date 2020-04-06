@@ -8,6 +8,6 @@ Semestre otoño 2018.
 ## Cuerpo docente
 | Auxiliar | correo |
 | :-: |:-:|
-| Pablo Pizarro R. | pablo.pizarro@ing.uchile.cl |
+| Pablo Pizarro R. | pablo@ppizarror.com |
 | Pablo Polanco | paropoga@gmail.com |
 | Mauricio Araneda H.  | maurirocket@gmail.com |
